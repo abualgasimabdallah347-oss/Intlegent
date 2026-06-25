@@ -16,7 +16,8 @@
 
         <div id="alertMessage" class="alert"></div>
 
-        <form id="loginForm" action="login.php" method="POST">
+        <!-- تم تعديل action للانتقال إلى content.html -->
+        <form action="content.html" method="GET">
             <div class="form-group">
                 <label for="username">اسم المستخدم</label>
                 <input type="text" id="username" name="username" placeholder="أدخل اسم المستخدم" required>
@@ -37,48 +38,79 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
     <script>
-        // عرض رسائل من URL
+        // ============================================
+        // التحقق من صحة البيانات قبل الانتقال
+        // ============================================
+
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const username = document.getElementById('username');
+            const password = document.getElementById('password');
+            const usernameError = document.getElementById('usernameError');
+            const passwordError = document.getElementById('passwordError');
+            let isValid = true;
+
+            // إخفاء الأخطاء السابقة
+            username.classList.remove('error');
+            password.classList.remove('error');
+            usernameError.style.display = 'none';
+            passwordError.style.display = 'none';
+
+            // التحقق من اسم المستخدم
+            if (username.value.trim() === '') {
+                username.classList.add('error');
+                usernameError.style.display = 'block';
+                isValid = false;
+            }
+
+            // التحقق من كلمة المرور
+            if (password.value.trim() === '') {
+                password.classList.add('error');
+                passwordError.style.display = 'block';
+                isValid = false;
+            }
+
+            // إذا كان هناك خطأ، نمنع الانتقال
+            if (!isValid) {
+                e.preventDefault();
+            } else {
+                // إذا كان كل شيء صحيحاً، ننتقل إلى content.html
+                // مع تمرير اسم المستخدم في الرابط (اختياري)
+                const usernameValue = username.value.trim();
+                window.location.href = `content.html?username=${encodeURIComponent(usernameValue)}`;
+                e.preventDefault(); // نمنع الإرسال العادي
+            }
+        });
+
+        // ============================================
+        // عرض رسائل من URL (اختياري)
+        // ============================================
+
         (function() {
             const urlParams = new URLSearchParams(window.location.search);
             const error = urlParams.get('error');
             const success = urlParams.get('success');
             const alertDiv = document.getElementById('alertMessage');
 
-            if (error) {
-                alertDiv.className = 'alert alert-danger';
-                alertDiv.style.display = 'block';
-                const messages = {
-                    'invalid': 'اسم المستخدم أو كلمة المرور غير صحيحة',
-                    'empty': 'يرجى ملء جميع الحقول',
-                    'not_found': 'المستخدم غير موجود',
-                    'db_error': 'حدث خطأ في قاعدة البيانات'
-                };
-                alertDiv.textContent = messages[error] || 'حدث خطأ، يرجى المحاولة مرة أخرى';
-            }
+            if (alertDiv) {
+                if (error) {
+                    alertDiv.className = 'alert alert-danger';
+                    alertDiv.style.display = 'block';
+                    const messages = {
+                        'invalid': '❌ اسم المستخدم أو كلمة المرور غير صحيحة',
+                        'empty': '❌ يرجى ملء جميع الحقول',
+                        'not_found': '❌ المستخدم غير موجود'
+                    };
+                    alertDiv.textContent = messages[error] || '❌ حدث خطأ، يرجى المحاولة مرة أخرى';
+                }
 
-            if (success === 'registered') {
-                alertDiv.className = 'alert alert-success';
-                alertDiv.style.display = 'block';
-                alertDiv.textContent = 'تم التسجيل بنجاح! يرجى تسجيل الدخول';
+                if (success === 'registered') {
+                    alertDiv.className = 'alert alert-success';
+                    alertDiv.style.display = 'block';
+                    alertDiv.textContent = '✅ تم التسجيل بنجاح! يرجى تسجيل الدخول';
+                }
             }
         })();
     </script>
-<!-- زر تبديل الوضع الليلي -->
-<button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="تبديل الوضع الليلي">
-    🌙
-</button>
-
-<script src="script.js"></script>
-<script>
-    // التحقق من الوضع الليلي المحفوظ
-    document.addEventListener('DOMContentLoaded', function() {
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-            document.getElementById('themeToggle').textContent = '☀️';
-        }
-    });
-</script>
 </body>
 </html>

@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<!-- القائمة الرئيسية -->
+
+
+<!-- روابط ملفات CSS و JS -->
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
     <div class="page-container">
         <!-- رأس الصفحة -->
         <header class="page-header">
@@ -21,7 +27,7 @@
                     <a href="about.html">👤 من نحن</a>
                     <a href="contact.html" class="active">📞 تواصل معنا</a>
                     <a href="test.html" class="nav-test-btn">🚀 ابدأ الاختبار</a>
-                    <a href="logout.php" class="nav-logout-btn">🚪 تسجيل خروج</a>
+                    <a href="index.html" class="nav-logout-btn">🚪 تسجيل خروج</a>
                 </nav>
                 <div class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</div>
             </div>
@@ -35,36 +41,42 @@
                     <p>نحن هنا لمساعدتك! تواصل معنا عبر أي من القنوات التالية:</p>
                     
                     <div class="contact-methods">
-                        <!-- رقم الهاتف -->
-                        <div class="contact-method">
-                            <span class="contact-icon">📱</span>
-                            <div>
-                                <h4>رقم الهاتف</h4>
-                                <p><a href="tel:0901188654" style="color: #667eea; text-decoration: none;">0901188654</a></p>
-                            </div>
-                        </div>
-
-                        <!-- البريد الإلكتروني -->
                         <div class="contact-method">
                             <span class="contact-icon">📧</span>
                             <div>
                                 <h4>البريد الإلكتروني</h4>
-                                <p><a href="mailto:gasim@gmail.com" style="color: #667eea; text-decoration: none;">gasim@gmail.com</a></p>
+                                <p>info@iq-test.com</p>
                             </div>
                         </div>
-
-                        <!-- واتساب -->
+                        <div class="contact-method">
+                            <span class="contact-icon">📱</span>
+                            <div>
+                                <h4>الهاتف</h4>
+                                <p>+966 50 000 0000</p>
+                            </div>
+                        </div>
                         <div class="contact-method">
                             <span class="contact-icon">💬</span>
                             <div>
                                 <h4>واتساب</h4>
-                                <p><a href="https://wa.me/966965346774" target="_blank" style="color: #667eea; text-decoration: none;">0965346774</a></p>
+                                <p>+966 50 000 0000</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <span class="contact-icon">📍</span>
+                            <div>
+                                <h4>العنوان</h4>
+                                <p>الرياض، المملكة العربية السعودية</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- تم حذف روابط التواصل الاجتماعي -->
-                    
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘 فيسبوك</a>
+                        <a href="#" class="social-link">🐦 تويتر</a>
+                        <a href="#" class="social-link">📸 إنستغرام</a>
+                        <a href="#" class="social-link">💼 لينكدإن</a>
+                    </div>
                 </div>
 
                 <div class="contact-form">
@@ -99,38 +111,5 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        function toggleMobileMenu() {
-            document.querySelector('.main-nav').classList.toggle('mobile-open');
-        }
-
-        function sendMessage(e) {
-            e.preventDefault();
-            const name = document.getElementById('contactName').value;
-            const msgDiv = document.getElementById('formMessage');
-            msgDiv.className = 'form-message success';
-            msgDiv.textContent = `✅ شكراً لك ${name}! تم إرسال رسالتك بنجاح. سنتواصل معك قريباً.`;
-            document.getElementById('contactForm').reset();
-            
-            setTimeout(() => {
-                msgDiv.style.display = 'none';
-            }, 5000);
-        }
-    </script>
-<!-- زر تبديل الوضع الليلي -->
-<button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="تبديل الوضع الليلي">
-    🌙
-</button>
-
-<script src="script.js"></script>
-<script>
-    // التحقق من الوضع الليلي المحفوظ
-    document.addEventListener('DOMContentLoaded', function() {
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-            document.getElementById('themeToggle').textContent = '☀️';
-        }
-    });
-</script>
 </body>
 </html>

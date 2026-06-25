@@ -1,14 +1,373 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>اختبار الذكاء</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- ربط ملف CSS الخارجي (اختياري، لكن يمكنك دمجه مع الستايل الداخلي) -->
+    <style>
+        /* ===== RESET & GLOBAL ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tahoma', 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header .user-info .avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .header .user-info .username {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .header .progress-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header .progress-info .score-badge {
+            background: #667eea;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            padding: 8px 18px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: #c0392b;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-bar-wrapper {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .progress-bar-wrapper .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* ===== QUESTION CARD ===== */
+        .question-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-card .question-number {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question-card .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        /* ===== OPTIONS ===== */
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #eef0ff;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .option input[type="radio"] {
+            display: none;
+        }
+
+        .option .option-label {
+            width: 30px;
+            height: 30px;
+            background: #f0f2f5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #555;
+            margin-left: 15px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .option.selected .option-label {
+            background: #667eea;
+            color: white;
+        }
+
+        .option .option-text {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            padding: 14px 35px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 17px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 140px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-prev {
+            background: #f0f0f0;
+            color: #555;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-prev:hover:not(:disabled) {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-prev:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-next:active {
+            transform: scale(0.98);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            animation: pulseGreen 2s infinite;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.5);
+        }
+
+        .btn-submit.hidden {
+            display: none;
+        }
+
+        @keyframes pulseGreen {
+            0% {
+                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+            }
+        }
+
+        .question-counter {
+            text-align: center;
+            margin-top: 20px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+                padding: 15px;
+            }
+            .header .progress-info {
+                justify-content: space-between;
+            }
+            .question-card {
+                padding: 20px;
+            }
+            .question-card .question-text {
+                font-size: 17px;
+            }
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            .controls button {
+                width: 100%;
+                min-width: unset;
+                padding: 16px 20px;
+                font-size: 16px;
+            }
+            .option {
+                padding: 12px 14px;
+            }
+            .option .option-label {
+                width: 25px;
+                height: 25px;
+                font-size: 13px;
+                margin-left: 12px;
+            }
+            .option .option-text {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .question-card .question-text {
+                font-size: 15px;
+            }
+            .option .option-text {
+                font-size: 13px;
+            }
+        }
+    </style>
 </head>
 <body>
+
     <div class="test-container">
-        <!-- رأس الصفحة -->
+
+        <!-- ===== HEADER ===== -->
         <div class="header">
             <div class="user-info">
                 <div class="avatar" id="userAvatar">م</div>
@@ -20,10 +379,10 @@
             </div>
         </div>
 
-        <!-- شريط التقدم -->
+        <!-- ===== PROGRESS BAR ===== -->
         <div class="progress-bar-wrapper">
             <div class="progress-text">
-                <span id="progressLabel">السؤال 1 من 12</span>
+                <span id="progressLabel">السؤال 1 من 15</span>
                 <span id="progressPercent">0%</span>
             </div>
             <div class="progress-bar">
@@ -31,52 +390,255 @@
             </div>
         </div>
 
-        <!-- بطاقة السؤال -->
+        <!-- ===== QUESTION CARD ===== -->
         <div class="question-card" id="questionCard">
             <div class="question-number" id="questionNumber">السؤال 1</div>
             <div class="question-text" id="questionText">جارٍ تحميل الأسئلة...</div>
+
             <div class="options" id="optionsContainer">
                 <!-- سيتم توليد الخيارات بواسطة JavaScript -->
             </div>
+
             <div class="controls">
-                <button class="btn-prev" id="prevBtn" disabled>السابق</button>
-                <button class="btn-next" id="nextBtn">التالي</button>
-                <button class="btn-submit hidden" id="submitBtn">إنهاء الاختبار</button>
+                <button class="btn-prev" id="prevBtn" disabled>⬅ السابق</button>
+                <button class="btn-next" id="nextBtn">التالي ➡</button>
+                <button class="btn-submit hidden" id="submitBtn" onclick="submitTest()">✅ إنهاء الاختبار</button>
             </div>
-            <div class="question-counter" id="questionCounter">1 / 12</div>
+
+            <div class="question-counter" id="questionCounter">1 / 15</div>
         </div>
+
     </div>
 
-    <script src="script.js"></script>
+    <!-- ===== جافاسكريبت ===== -->
     <script>
-        // جلب اسم المستخدم من الجلسة
-        fetch('test.php?action=get_user')
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('userName').textContent = data.username;
-                    document.getElementById('userAvatar').textContent = data.username.charAt(0);
-                }
-            })
-            .catch(() => {
-                // إذا لم يتم تسجيل الدخول، التوجيه لتسجيل الدخول
-                window.location.href = 'login.html';
-            });
-    </script>
-<!-- زر تبديل الوضع الليلي -->
-<button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="تبديل الوضع الليلي">
-    🌙
-</button>
+        // =============================================
+        // بيانات الأسئلة (ثابتة – Frontend فقط)
+        // =============================================
+        const questions = [{
+            id: 1,
+            question: 'ما هو ناتج 7 × 8؟',
+            options: ['48', '56', '64', '72'],
+            correct: 1
+        }, {
+            id: 2,
+            question: 'أي من التالي ليس كوكباً في المجموعة الشمسية؟',
+            options: ['المريخ', 'الزهرة', 'بلوتو', 'سيريس'],
+            correct: 3
+        }, {
+            id: 3,
+            question: 'ما هو عكس كلمة "سعيد"؟',
+            options: ['فرح', 'حزين', 'مبتهج', 'مسرور'],
+            correct: 1
+        }, {
+            id: 4,
+            question: 'إذا كان عمر أحمد ضعف عمر علي، ومجموع أعمارهما 36، فكم عمر علي؟',
+            options: ['10', '12', '14', '16'],
+            correct: 1
+        }, {
+            id: 5,
+            question: 'ما هي عاصمة مصر؟',
+            options: ['الإسكندرية', 'القاهرة', 'الجيزة', 'الأقصر'],
+            correct: 1
+        }, {
+            id: 6,
+            question: 'أكمل المتسلسلة: 2، 4، 8، 16، ...؟',
+            options: ['24', '30', '32', '40'],
+            correct: 2
+        }, {
+            id: 7,
+            question: 'ما هو العنصر الكيميائي الذي رمزه O؟',
+            options: ['ذهب', 'فضة', 'أكسجين', 'هيدروجين'],
+            correct: 2
+        }, {
+            id: 8,
+            question: 'كم عدد أضلاع المكعب؟',
+            options: ['6', '8', '10', '12'],
+            correct: 3
+        }, {
+            id: 9,
+            question: 'ما هي اللغة الأكثر انتشاراً في العالم؟',
+            options: ['الإنجليزية', 'الصينية', 'الإسبانية', 'العربية'],
+            correct: 0
+        }, {
+            id: 10,
+            question: 'أي من التالي يستخدم لقياس الزوايا؟',
+            options: ['المسطرة', 'المنقلة', 'الميزان', 'الساعة'],
+            correct: 1
+        }, {
+            id: 11,
+            question: 'ما هو أكبر محيط في العالم؟',
+            options: ['المحيط الأطلسي', 'المحيط الهادئ', 'المحيط الهندي', 'المحيط المتجمد'],
+            correct: 1
+        }, {
+            id: 12,
+            question: '5 + 3 × 2 = ؟',
+            options: ['11', '16', '13', '10'],
+            correct: 0
+        }, {
+            id: 13,
+            question: 'ما هو الجهاز الذي يستخدم لقياس ضغط الدم؟',
+            options: ['مقياس الحرارة', 'السماعة الطبية', 'مقياس الضغط', 'الميزان'],
+            correct: 2
+        }, {
+            id: 14,
+            question: 'كم عدد القارات في العالم؟',
+            options: ['5', '6', '7', '8'],
+            correct: 2
+        }, {
+            id: 15,
+            question: 'ما هي أطول سلسلة جبال في العالم؟',
+            options: ['جبال الهيمالايا', 'جبال الأنديز', 'جبال الروكي', 'جبال الألب'],
+            correct: 1
+        }];
 
-<script src="script.js"></script>
-<script>
-    // التحقق من الوضع الليلي المحفوظ
-    document.addEventListener('DOMContentLoaded', function() {
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-            document.getElementById('themeToggle').textContent = '☀️';
+        // =============================================
+        // المتغيرات العامة
+        // =============================================
+        let currentQuestion = 0;
+        let userAnswers = {};
+        const totalQuestions = questions.length;
+
+        // =============================================
+        // عرض السؤال
+        // =============================================
+        function renderQuestion(index) {
+            const q = questions[index];
+            const container = document.getElementById('optionsContainer');
+            const questionText = document.getElementById('questionText');
+            const questionNumber = document.getElementById('questionNumber');
+            const questionCounter = document.getElementById('questionCounter');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // نصوص
+            questionNumber.textContent = `📝 السؤال ${index + 1}`;
+            questionText.textContent = q.question;
+            questionCounter.textContent = `${index + 1} / ${totalQuestions}`;
+
+            // شريط التقدم
+            const progress = ((index + 1) / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressLabel').textContent = `السؤال ${index + 1} من ${totalQuestions}`;
+            document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+
+            // الخيارات
+            const labels = ['أ', 'ب', 'ج', 'د'];
+            let html = '';
+            q.options.forEach((opt, i) => {
+                const selected = (userAnswers[q.id] === i) ? 'selected' : '';
+                const checked = (userAnswers[q.id] === i) ? 'checked' : '';
+                html += `
+                    <div class="option ${selected}" data-option="${i}" onclick="selectOption(${q.id}, ${i})">
+                        <input type="radio" name="question_${q.id}" value="${i}" ${checked}>
+                        <span class="option-label">${labels[i]}</span>
+                        <span class="option-text">${opt}</span>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+
+            // أزرار
+            prevBtn.disabled = (index === 0);
+            if (index === totalQuestions - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.style.display = 'block';
+                submitBtn.classList.add('hidden');
+            }
+
+            // تحديث النقاط
+            updateScore();
         }
-    });
-</script>
+
+        // =============================================
+        // اختيار إجابة
+        // =============================================
+        function selectOption(questionId, optionIndex) {
+            userAnswers[questionId] = optionIndex;
+
+            // تحديث واجهة الخيارات
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+                const radio = opt.querySelector('input[type="radio"]');
+                if (radio && parseInt(radio.value) === optionIndex) {
+                    opt.classList.add('selected');
+                    radio.checked = true;
+                }
+            });
+
+            updateScore();
+        }
+
+        // =============================================
+        // تحديث النقاط
+        // =============================================
+        function updateScore() {
+            let score = 0;
+            for (const [qId, answer] of Object.entries(userAnswers)) {
+                const q = questions.find(item => item.id == qId);
+                if (q && q.correct === answer) score++;
+            }
+            document.getElementById('scoreDisplay').textContent = `${score} نقطة`;
+        }
+
+        // =============================================
+        // التنقل بين الأسئلة
+        // =============================================
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions - 1) {
+                currentQuestion++;
+                renderQuestion(currentQuestion);
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion(currentQuestion);
+            }
+        }
+
+        // =============================================
+        // إنهاء الاختبار وعرض النتيجة
+        // =============================================
+        function submitTest() {
+            const answered = Object.keys(userAnswers).length;
+            if (answered < totalQuestions) {
+                if (!confirm(`⚠️ لقد أجبت على ${answered} من ${totalQuestions} أسئلة.\nهل تريد إنهاء الاختبار؟`)) {
+                    return;
+                }
+            }
+
+            let score = 0;
+            for (const [qId, answer] of Object.entries(userAnswers)) {
+                const q = questions.find(item => item.id == qId);
+                if (q && q.correct === answer) score++;
+            }
+
+            // توجيه إلى صفحة النتائج مع الدرجة
+            window.location.href = `results.html?score=${score}&total=${totalQuestions}`;
+        }
+
+        // =============================================
+        // تسجيل الخروج (محاكاة)
+        // =============================================
+       
+
+        // =============================================
+        // تشغيل أول سؤال عند تحميل الصفحة
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            renderQuestion(0);
+            // ربط الأزرار
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+            document.getElementById('prevBtn').addEventListener('click', prevQuestion);
+            // زر submit مربوط بـ onclick مباشرة في HTML
+        });
+    </script>
+   
 </body>
 </html>

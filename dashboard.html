@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرئيسية - اختبار الذكاء</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- رأس الصفحة -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <span class="brain-icon">🧠</span>
+                    <h1>اختبار الذكاء</h1>
+                </div>
+                <nav class="main-nav">
+                    <a href="dashboard.html" class="active">🏠 الرئيسية</a>
+                    <a href="content.html">📚 المحتوى</a>
+                    <a href="about.html">👤 من نحن</a>
+                    <a href="contact.html">📞 تواصل معنا</a>
+                    <a href="test.html" class="nav-test-btn">🚀 ابدأ الاختبار</a>
+                    <a href="logout.php" class="nav-logout-btn">🚪 تسجيل خروج</a>
+                </nav>
+                <div class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</div>
+            </div>
+        </header>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="dashboard-main">
+            <!-- قسم الترحيب -->
+            <section class="welcome-section animate-brain">
+                <div class="brain-animation">
+                    <div class="brain-container">
+                        <div class="brain-3d"></div>
+                    </div>
+                </div>
+                <div class="welcome-text">
+                    <h2>👋 مرحباً بك في اختبار الذكاء</h2>
+                    <p id="welcomeUser">مستخدمنا العزيز</p>
+                    <p class="welcome-desc">اكتشف مستوى ذكائك من خلال اختبارنا المتطور. نحن نقدم لك تجربة فريدة لقياس قدراتك العقلية في مجالات متعددة.</p>
+                    <div class="welcome-stats">
+                        <div class="stat-box">
+                            <span class="stat-number">15</span>
+                            <span class="stat-label">سؤال</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">5</span>
+                            <span class="stat-label">مجالات</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">10</span>
+                            <span class="stat-label">دقائق</span>
+                        </div>
+                    </div>
+                    <a href="test.html" class="btn-start-test">🚀 ابدأ الاختبار الآن</a>
+                </div>
+            </section>
+
+            <!-- قسم المميزات -->
+            <section class="features-section">
+                <h2>✨ لماذا تختبر ذكائك معنا؟</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h3>ذكاء متعدد</h3>
+                        <p>نقيس الذكاء في مجالات متعددة: الرياضيات، المنطق، اللغة، العلوم والجغرافيا</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>نتائج فورية</h3>
+                        <p>احصل على نتيجتك فور انتهاء الاختبار مع تحليل مفصل لمستوى ذكائك</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3>مصمم عربياً</h3>
+                        <p>الموقع مصمم خصيصاً للمستخدم العربي وبواجهة سهلة الاستخدام</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>آمن وخصوصي</h3>
+                        <p>بياناتك محفوظة بشكل آمن ولا نشاركها مع أي جهة خارجية</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- قسم الشهادات -->
+            <section class="testimonials-section">
+                <h2>💬 ماذا يقول المستخدمون؟</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <p>"اختبار رائع! ساعدني في معرفة نقاط قوتي وضعفي."</p>
+                        <div class="testimonial-author">
+                            <span class="author-name">أحمد محمد</span>
+                            <span class="author-rating">⭐⭐⭐⭐⭐</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"تصميم جميل وأسئلة متنوعة. أنصح الجميع بتجربته."</p>
+                        <div class="testimonial-author">
+                            <span class="author-name">سارة خالد</span>
+                            <span class="author-rating">⭐⭐⭐⭐⭐</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"تجربة ممتعة ومفيدة. النتائج كانت دقيقة جداً."</p>
+                        <div class="testimonial-author">
+                            <span class="author-name">محمد علي</span>
+                            <span class="author-rating">⭐⭐⭐⭐⭐</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- تذييل الصفحة -->
+        <footer class="dashboard-footer">
+            <p>© 2026 اختبار الذكاء. جميع الحقوق محفوظة</p>
+            <div class="footer-links">
+                <a href="about.html">من نحن</a>
+                <a href="contact.html">اتصل بنا</a>
+                <a href="#">سياسة الخصوصية</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // جلب اسم المستخدم
+        fetch('test.php?action=get_user')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('welcomeUser').textContent = '👤 ' + data.username;
+                }
+            });
+
+        // قائمة الموبايل
+        function toggleMobileMenu() {
+            const nav = document.querySelector('.main-nav');
+            nav.classList.toggle('mobile-open');
+        }
+
+        // تأثير ظهور البطاقات
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card, .testimonial-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 200 + (index * 100));
+            });
+        });
+    </script>
+<!-- زر تبديل الوضع الليلي -->
+<button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="تبديل الوضع الليلي">
+    🌙
+</button>
+
+<script src="script.js"></script>
+<script>
+    // التحقق من الوضع الليلي المحفوظ
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('themeToggle').textContent = '☀️';
+        }
+    });
+</script>
+</body>
+</html>

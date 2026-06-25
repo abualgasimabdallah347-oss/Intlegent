@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتيجة اختبار الذكاء - IQ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="results-container">
+        <div class="results-card" id="resultsCard">
+            <!-- أيقونة النتيجة -->
+            <div class="result-icon" id="resultIcon">🧠</div>
+            
+            <h1>📊 نتيجة اختبار الذكاء</h1>
+            
+            <!-- درجة IQ -->
+            <div class="iq-score-container">
+                <div class="iq-score-number" id="iqScore">0</div>
+                <div class="iq-score-label">نسبة الذكاء (IQ)</div>
+            </div>
+
+            <!-- مستوى الذكاء -->
+            <div class="iq-level-badge" id="iqLevel">متفوق ⭐</div>
+            
+            <!-- وصف النتيجة -->
+            <p class="iq-description" id="iqDescription">نتيجة رائعة! أنت تتمتع بذكاء عالٍ وقدرة ممتازة على حل المشكلات.</p>
+
+            <!-- شريط تقدم الذكاء -->
+            <div class="iq-bar-container">
+                <div class="iq-bar-labels">
+                    <span>ضعيف</span>
+                    <span>متوسط</span>
+                    <span>جيد</span>
+                    <span>متفوق</span>
+                    <span>عبقري</span>
+                </div>
+                <div class="iq-bar">
+                    <div class="iq-bar-fill" id="iqBarFill" style="width: 0%;"></div>
+                    <div class="iq-bar-marker" id="iqBarMarker" style="left: 0%;">▼</div>
+                </div>
+            </div>
+
+            <!-- إحصائيات التفاصيل -->
+            <div class="results-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="correctCount">0</div>
+                    <div class="stat-label">✅ إجابات صحيحة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="wrongCount">0</div>
+                    <div class="stat-label">❌ إجابات خاطئة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="percentageDisplay">0%</div>
+                    <div class="stat-label">📈 نسبة النجاح</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalQuestions">0</div>
+                    <div class="stat-label">📝 إجمالي الأسئلة</div>
+                </div>
+            </div>
+
+            <!-- جدول تفسير النتيجة -->
+            <div class="iq-interpretation">
+                <h3>📖 تفسير النتيجة</h3>
+                <div class="interpretation-grid">
+                    <div class="interpretation-item">
+                        <span class="interpretation-label">🔹 قدراتك العقلية</span>
+                        <span class="interpretation-value" id="mentalAbility">متوسطة</span>
+                    </div>
+                    <div class="interpretation-item">
+                        <span class="interpretation-label">🔹 مستوى التحليل</span>
+                        <span class="interpretation-value" id="analysisLevel">جيد</span>
+                    </div>
+                    <div class="interpretation-item">
+                        <span class="interpretation-label">🔹 سرعة البديهة</span>
+                        <span class="interpretation-value" id="quickWit">جيدة</span>
+                    </div>
+                    <div class="interpretation-item">
+                        <span class="interpretation-label">🔹 التفكير المنطقي</span>
+                        <span class="interpretation-value" id="logicalThinking">متطور</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- نصائح للتحسين -->
+            <div class="iq-tips" id="iqTips">
+                <h3>💡 نصائح لتحسين ذكائك</h3>
+                <ul id="tipsList">
+                    <li>📚 اقرأ كتباً متنوعة لتوسيع مداركك</li>
+                    <li>🧩 حل الألغاز والألعاب العقلية بانتظام</li>
+                    <li>🎯 مارس تمارين التركيز والانتباه</li>
+                    <li>🧠 تعلم مهارات جديدة باستمرار</li>
+                </ul>
+            </div>
+
+            <!-- أزرار الإجراءات -->
+            <div class="results-actions">
+                <button class="btn-retry" onclick="retryTest()">🔄 إعادة الاختبار</button>
+                <button class="btn-dashboard" onclick="goToDashboard()">🏠 الرئيسية</button>
+                <button class="btn-share" onclick="shareResult()">📤 مشاركة النتيجة</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // ============================================
+        // عرض النتائج مع مقياس IQ
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // جلب النتائج من URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const score = parseInt(urlParams.get('score')) || 0;
+            const total = parseInt(urlParams.get('total')) || 15;
+
+            // حساب النسب
+            const percentage = (score / total) * 100;
+            
+            // ===== حساب مقياس IQ =====
+            // المعادلة: IQ = (الدرجة / إجمالي الأسئلة) × 100 + 50
+            // النطاق: 50 - 150 (متوسط الذكاء 100)
+            let iqScore = Math.round((score / total) * 100 + 50);
+            
+            // التأكد من أن النتيجة في النطاق المنطقي
+            if (iqScore < 50) iqScore = 50;
+            if (iqScore > 150) iqScore = 150;
+
+            // ===== تحديد مستوى الذكاء =====
+            let iqLevel, iqDescription, icon, mentalAbility, analysisLevel, quickWit, logicalThinking;
+            let tips = [];
+            let barColor = '';
+            
+            if (iqScore >= 130) {
+                iqLevel = 'عبقري 🧠';
+                icon = '🌟';
+                barColor = '#e74c3c';
+                mentalAbility = 'استثنائية';
+                analysisLevel = 'متطور جداً';
+                quickWit = 'سريعة جداً';
+                logicalThinking = 'منطق استثنائي';
+                iqDescription = '⭐ أنت عبقري! قدراتك العقلية تفوق 98% من الناس. لديك ذكاء استثنائي وقدرة تحليلية مذهلة.';
+                tips = [
+                    '🎯 تحدى نفسك بمشاكل أكثر تعقيداً',
+                    '📚 اقرأ في مجالات متنوعة خارج تخصصك',
+                    '🧠 علم الآخرين ما تعلمته لتعزيز فهمك',
+                    '💡 ابحث عن تحديات جديدة باستمرار'
+                ];
+            } else if (iqScore >= 115) {
+                iqLevel = 'متفوق ⭐';
+                icon = '🏆';
+                barColor = '#e67e22';
+                mentalAbility = 'عالية جداً';
+                analysisLevel = 'متطور';
+                quickWit = 'سريعة';
+                logicalThinking = 'منطق قوي';
+                iqDescription = '🏆 نتيجة ممتازة! أنت في أعلى 15% من السكان. تتمتع بذكاء عالٍ وقدرة تحليلية ممتازة.';
+                tips = [
+                    '📖 اقرأ كتباً في الفلسفة والمنطق',
+                    '🎲 مارس ألعاباً استراتيجية مثل الشطرنج',
+                    '🧩 حل ألغازاً معقدة بانتظام',
+                    '📝 اكتب أفكارك لتنظيم تفكيرك'
+                ];
+            } else if (iqScore >= 100) {
+                iqLevel = 'جيد جداً 👍';
+                icon = '📈';
+                barColor = '#f1c40f';
+                mentalAbility = 'جيدة';
+                analysisLevel = 'جيد';
+                quickWit = 'جيدة';
+                logicalThinking = 'جيد';
+                iqDescription = '👍 نتيجة جيدة! أنت في المستوى المتوسط العالي. لديك قدرات عقلية جيدة ويمكنك تطويرها أكثر.';
+                tips = [
+                    '📚 اقرأ بانتظام لتعزيز مفرداتك',
+                    '🧩 حل الألغاز والكلمات المتقاطعة',
+                    '🎯 مارس تمارين الذاكرة والتركيز',
+                    '🗣️ ناقش الآخرين في مواضيع متنوعة'
+                ];
+            } else if (iqScore >= 80) {
+                iqLevel = 'متوسط 📚';
+                icon = '🔆';
+                barColor = '#3498db';
+                mentalAbility = 'متوسطة';
+                analysisLevel = 'متوسط';
+                quickWit = 'متوسطة';
+                logicalThinking = 'متوسط';
+                iqDescription = '📚 أنت في المستوى المتوسط. هناك مجال للتحسين، لا تقلق فالذكاء قابل للتطوير بالتدريب المستمر.';
+                tips = [
+                    '🧠 مارس تمارين العقل يومياً',
+                    '📖 اقرأ كتباً تطوير الذات',
+                    '🎯 حدد أهدافاً صغيرة للتعلم',
+                    '💪 طور مهاراتك تدريجياً'
+                ];
+            } else {
+                iqLevel = 'يحتاج للتحسين 💪';
+                icon = '🌱';
+                barColor = '#95a5a6';
+                mentalAbility = 'في تطور';
+                analysisLevel = 'قيد التطوير';
+                quickWit = 'قيد التطوير';
+                logicalThinking = 'قيد التطوير';
+                iqDescription = '🌱 لا تقلق! الذكاء ليس ثابتاً. مع التدريب المنتظم يمكنك تحسين قدراتك العقلية بشكل كبير. ابدأ اليوم!';
+                tips = [
+                    '🧩 ابدأ بألعاب ذهنية بسيطة',
+                    '📚 اقرأ قصصاً ومقالات قصيرة',
+                    '🎯 مارس تمارين التركيز يومياً',
+                    '💪 استمر وكن صبوراً مع نفسك'
+                ];
+            }
+
+            // ===== عرض النتائج =====
+            document.getElementById('resultIcon').textContent = icon;
+            document.getElementById('iqScore').textContent = iqScore;
+            document.getElementById('iqLevel').textContent = iqLevel;
+            document.getElementById('iqDescription').textContent = iqDescription;
+            
+            // الإحصائيات
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('wrongCount').textContent = total - score;
+            document.getElementById('percentageDisplay').textContent = Math.round(percentage) + '%';
+            document.getElementById('totalQuestions').textContent = total;
+
+            // شريط التقدم
+            const barWidth = Math.min((iqScore - 50) / 100 * 100, 100);
+            document.getElementById('iqBarFill').style.width = barWidth + '%';
+            document.getElementById('iqBarFill').style.background = `linear-gradient(90deg, #667eea, ${barColor})`;
+            document.getElementById('iqBarMarker').style.left = barWidth + '%';
+
+            // تفسير النتيجة
+            document.getElementById('mentalAbility').textContent = mentalAbility;
+            document.getElementById('analysisLevel').textContent = analysisLevel;
+            document.getElementById('quickWit').textContent = quickWit;
+            document.getElementById('logicalThinking').textContent = logicalThinking;
+
+            // النصائح
+            const tipsList = document.getElementById('tipsList');
+            tipsList.innerHTML = '';
+            tips.forEach(tip => {
+                const li = document.createElement('li');
+                li.textContent = tip;
+                tipsList.appendChild(li);
+            });
+
+            // ===== تأثيرات الحركة =====
+            const card = document.querySelector('.results-card');
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.8s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100);
+
+            // عد تنازلي لرقم IQ
+            let currentIq = 0;
+            const targetIq = iqScore;
+            const iqElement = document.getElementById('iqScore');
+            const interval = setInterval(() => {
+                if (currentIq < targetIq) {
+                    currentIq++;
+                    iqElement.textContent = currentIq;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 20);
+        });
+
+        // ===== دوال الأزرار =====
+        function retryTest() {
+            if (confirm('🔄 هل تريد إعادة اختبار الذكاء؟')) {
+                window.location.href = 'test.html';
+            }
+        }
+
+        function goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+
+        function shareResult() {
+            const iqScore = document.getElementById('iqScore').textContent;
+            const level = document.getElementById('iqLevel').textContent;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'نتيجة اختبار الذكاء',
+                    text: `🧠 درجة الذكاء: ${iqScore}\n📊 المستوى: ${level}\n\nاختبر ذكائك الآن!`,
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                // نسخ النتيجة إلى الحافظة
+                const text = `🧠 درجة الذكاء: ${iqScore}\n📊 المستوى: ${level}\n\nاختبر ذكائك الآن!`;
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('✅ تم نسخ النتيجة! يمكنك مشاركتها الآن.');
+                }).catch(() => {
+                    alert('📤 النتيجة: ' + text);
+                });
+            }
+        }
+
+        // ===== تأثير نبض لشريط التقدم =====
+        document.querySelector('.iq-bar-marker').addEventListener('animationend', function() {
+            this.style.animation = 'none';
+            setTimeout(() => {
+                this.style.animation = 'bounceMarker 2s ease-in-out infinite';
+            }, 10);
+        });
+    </script>
+<!-- زر تبديل الوضع الليلي -->
+<button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="تبديل الوضع الليلي">
+    🌙
+</button>
+
+<script src="script.js"></script>
+<script>
+    // التحقق من الوضع الليلي المحفوظ
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('themeToggle').textContent = '☀️';
+        }
+    });
+</script>
+</body>
+</html>

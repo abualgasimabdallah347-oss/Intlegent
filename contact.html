@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل معنا - اختبار الذكاء</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-container">
+        <!-- رأس الصفحة -->
+        <header class="page-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <span class="brain-icon">🧠</span>
+                    <h1>اختبار الذكاء</h1>
+                </div>
+                <nav class="main-nav">
+                    <a href="dashboard.html">🏠 الرئيسية</a>
+                    <a href="content.html">📚 المحتوى</a>
+                    <a href="about.html">👤 من نحن</a>
+                    <a href="contact.html" class="active">📞 تواصل معنا</a>
+                    <a href="test.html" class="nav-test-btn">🚀 ابدأ الاختبار</a>
+                    <a href="logout.php" class="nav-logout-btn">🚪 تسجيل خروج</a>
+                </nav>
+                <div class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</div>
+            </div>
+        </header>
+
+        <!-- المحتوى -->
+        <main class="page-main">
+            <section class="contact-section">
+                <div class="contact-info">
+                    <h2>📞 تواصل معنا</h2>
+                    <p>نحن هنا لمساعدتك! تواصل معنا عبر أي من القنوات التالية:</p>
+                    
+                    <div class="contact-methods">
+                        <!-- رقم الهاتف -->
+                        <div class="contact-method">
+                            <span class="contact-icon">📱</span>
+                            <div>
+                                <h4>رقم الهاتف</h4>
+                                <p><a href="tel:0901188654" style="color: #667eea; text-decoration: none;">0901188654</a></p>
+                            </div>
+                        </div>
+
+                        <!-- البريد الإلكتروني -->
+                        <div class="contact-method">
+                            <span class="contact-icon">📧</span>
+                            <div>
+                                <h4>البريد الإلكتروني</h4>
+                                <p><a href="mailto:gasim@gmail.com" style="color: #667eea; text-decoration: none;">gasim@gmail.com</a></p>
+                            </div>
+                        </div>
+
+                        <!-- واتساب -->
+                        <div class="contact-method">
+                            <span class="contact-icon">💬</span>
+                            <div>
+                                <h4>واتساب</h4>
+                                <p><a href="https://wa.me/966965346774" target="_blank" style="color: #667eea; text-decoration: none;">0965346774</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- تم حذف روابط التواصل الاجتماعي -->
+                    
+                </div>
+
+                <div class="contact-form">
+                    <h3>✉️ أرسل رسالة</h3>
+                    <form id="contactForm" onsubmit="sendMessage(event)">
+                        <div class="form-group">
+                            <label for="contactName">الاسم</label>
+                            <input type="text" id="contactName" placeholder="أدخل اسمك" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">البريد الإلكتروني</label>
+                            <input type="email" id="contactEmail" placeholder="example@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSubject">الموضوع</label>
+                            <input type="text" id="contactSubject" placeholder="موضوع الرسالة" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">الرسالة</label>
+                            <textarea id="contactMessage" rows="5" placeholder="اكتب رسالتك هنا..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-send">📤 إرسال الرسالة</button>
+                    </form>
+                    <div id="formMessage" class="form-message"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="page-footer">
+            <p>© 2026 اختبار الذكاء. جميع الحقوق محفوظة</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function toggleMobileMenu() {
+            document.querySelector('.main-nav').classList.toggle('mobile-open');
+        }
+
+        function sendMessage(e) {
+            e.preventDefault();
+            const name = document.getElementById('contactName').value;
+            const msgDiv = document.getElementById('formMessage');
+            msgDiv.className = 'form-message success';
+            msgDiv.textContent = `✅ شكراً لك ${name}! تم إرسال رسالتك بنجاح. سنتواصل معك قريباً.`;
+            document.getElementById('contactForm').reset();
+            
+            setTimeout(() => {
+                msgDiv.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+<!-- زر تبديل الوضع الليلي -->
+<button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="تبديل الوضع الليلي">
+    🌙
+</button>
+
+<script src="script.js"></script>
+<script>
+    // التحقق من الوضع الليلي المحفوظ
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('themeToggle').textContent = '☀️';
+        }
+    });
+</script>
+</body>
+</html>

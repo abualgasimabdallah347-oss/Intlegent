@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - اختبار الذكاء</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-container register">
+        <div class="logo">
+            <span class="brain-icon">🧠</span>
+            <h1>إنشاء حساب جديد</h1>
+            <p>سجل الآن لتبدأ اختبار الذكاء</p>
+        </div>
+
+        <div id="alertMessage" class="alert"></div>
+
+        <form id="registerForm" action="register.php" method="POST">
+            <div class="form-group">
+                <label for="username">اسم المستخدم</label>
+                <input type="text" id="username" name="username" placeholder="اختر اسم مستخدم" required>
+                <div id="usernameError" class="error-message">اسم المستخدم مطلوب (3 أحرف على الأقل)</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">البريد الإلكتروني</label>
+                <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                <div id="emailError" class="error-message">يرجى إدخال بريد إلكتروني صحيح</div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">كلمة المرور</label>
+                <input type="password" id="password" name="password" placeholder="أدخل كلمة المرور" required>
+                <div class="password-hint">يجب أن تكون 6 أحرف على الأقل</div>
+                <div id="passwordError" class="error-message">كلمة المرور مطلوبة (6 أحرف على الأقل)</div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">تأكيد كلمة المرور</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="أعد إدخال كلمة المرور" required>
+                <div id="confirmError" class="error-message">كلمة المرور غير متطابقة</div>
+            </div>
+
+            <button type="submit" class="btn-primary">إنشاء الحساب</button>
+        </form>
+
+        <div class="auth-link">
+            لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // عرض رسائل من URL
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            const alertDiv = document.getElementById('alertMessage');
+
+            if (error) {
+                alertDiv.className = 'alert alert-danger';
+                alertDiv.style.display = 'block';
+                const messages = {
+                    'username_taken': 'اسم المستخدم موجود بالفعل',
+                    'email_taken': 'البريد الإلكتروني مستخدم بالفعل',
+                    'invalid': 'البيانات غير صحيحة، يرجى التحقق',
+                    'db_error': 'حدث خطأ في قاعدة البيانات، حاول مرة أخرى'
+                };
+                alertDiv.textContent = messages[error] || 'حدث خطأ، يرجى المحاولة مرة أخرى';
+            }
+        })();
+    </script>
+<!-- زر تبديل الوضع الليلي -->
+<button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="تبديل الوضع الليلي">
+    🌙
+</button>
+
+<script src="script.js"></script>
+<script>
+    // التحقق من الوضع الليلي المحفوظ
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('themeToggle').textContent = '☀️';
+        }
+    });
+</script>
+</body>
+</html>

@@ -21,7 +21,7 @@
                     <a href="about.html">👤 من نحن</a>
                     <a href="contact.html">📞 تواصل معنا</a>
                     <a href="test.html" class="nav-test-btn">🚀 ابدأ الاختبار</a>
-                    <a href="logout.php" class="nav-logout-btn">🚪 تسجيل خروج</a>
+                    <a href="index.html" class="nav-logout-btn">🚪 تسجيل خروج</a>
                 </nav>
                 <div class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</div>
             </div>
@@ -126,50 +126,5 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // جلب اسم المستخدم
-        fetch('test.php?action=get_user')
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('welcomeUser').textContent = '👤 ' + data.username;
-                }
-            });
-
-        // قائمة الموبايل
-        function toggleMobileMenu() {
-            const nav = document.querySelector('.main-nav');
-            nav.classList.toggle('mobile-open');
-        }
-
-        // تأثير ظهور البطاقات
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.feature-card, .testimonial-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.style.transition = 'all 0.6s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, 200 + (index * 100));
-            });
-        });
-    </script>
-<!-- زر تبديل الوضع الليلي -->
-<button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="تبديل الوضع الليلي">
-    🌙
-</button>
-
-<script src="script.js"></script>
-<script>
-    // التحقق من الوضع الليلي المحفوظ
-    document.addEventListener('DOMContentLoaded', function() {
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-            document.getElementById('themeToggle').textContent = '☀️';
-        }
-    });
-</script>
 </body>
 </html>

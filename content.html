@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div class="page-container">
         <!-- رأس الصفحة -->
         <header class="page-header">
@@ -19,9 +20,9 @@
                     <a href="dashboard.html">🏠 الرئيسية</a>
                     <a href="content.html" class="active">📚 المحتوى</a>
                     <a href="about.html">👤 من نحن</a>
-                    <a href="contact.html">📞 تواصل معنا</a>
+                    <a href="contact.html">📞 اتواصل معنا</a>
                     <a href="test.html" class="nav-test-btn">🚀 ابدأ الاختبار</a>
-                    <a href="logout.php" class="nav-logout-btn">🚪 تسجيل خروج</a>
+                    <a href="index.html" class="nav-logout-btn">🚪 تسجيل خروج</a>
                 </nav>
                 <div class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</div>
             </div>
@@ -40,7 +41,7 @@
                     <div class="content-card">
                         <div class="content-card-icon">🧮</div>
                         <h3>الرياضيات</h3>
-                        <p>أسئلة رياضية تختبر قدرتك على الحساب والتفكير المنطقي. تشمل العمليات الحسابية والمعادلات البسيطة.</p>
+                        <p>أسئلة رياضية تختبر قدرتك على الحساب والتفكير المنطقي.</p>
                         <ul>
                             <li>✅ العمليات الحسابية</li>
                             <li>✅ المعادلات</li>
@@ -51,7 +52,7 @@
                     <div class="content-card">
                         <div class="content-card-icon">🔬</div>
                         <h3>العلوم</h3>
-                        <p>أسئلة علمية تغطي مجالات متنوعة مثل الكيمياء والفيزياء والأحياء. تختبر معلوماتك العلمية العامة.</p>
+                        <p>أسئلة علمية تغطي مجالات متنوعة مثل الكيمياء والفيزياء.</p>
                         <ul>
                             <li>✅ العناصر الكيميائية</li>
                             <li>✅ الظواهر الطبيعية</li>
@@ -62,7 +63,7 @@
                     <div class="content-card">
                         <div class="content-card-icon">📖</div>
                         <h3>اللغة</h3>
-                        <p>أسئلة لغوية تختبر مفرداتك وفهمك للغة العربية. تشمل المرادفات والمتضادات والمفردات.</p>
+                        <p>أسئلة لغوية تختبر مفرداتك وفهمك للغة العربية.</p>
                         <ul>
                             <li>✅ المرادفات</li>
                             <li>✅ المتضادات</li>
@@ -73,7 +74,7 @@
                     <div class="content-card">
                         <div class="content-card-icon">🌍</div>
                         <h3>الجغرافيا</h3>
-                        <p>أسئلة جغرافية تختبر معرفتك بالعالم من حولك. تشمل المدن والبلدان والمحيطات والجبال.</p>
+                        <p>أسئلة جغرافية تختبر معرفتك بالعالم من حولك.</p>
                         <ul>
                             <li>✅ العواصم</li>
                             <li>✅ المحيطات</li>
@@ -84,7 +85,7 @@
                     <div class="content-card">
                         <div class="content-card-icon">🧩</div>
                         <h3>المنطق</h3>
-                        <p>أسئلة منطقية تختبر قدرتك على الاستنتاج والتحليل. تشمل المتسلسلات والأنماط.</p>
+                        <p>أسئلة منطقية تختبر قدرتك على الاستنتاج والتحليل.</p>
                         <ul>
                             <li>✅ المتسلسلات العددية</li>
                             <li>✅ الأنماط</li>
@@ -113,25 +114,5 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        function toggleMobileMenu() {
-            document.querySelector('.main-nav').classList.toggle('mobile-open');
-        }
-    </script>
-<!-- زر تبديل الوضع الليلي -->
-<button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="تبديل الوضع الليلي">
-    🌙
-</button>
-
-<script src="script.js"></script>
-<script>
-    // التحقق من الوضع الليلي المحفوظ
-    document.addEventListener('DOMContentLoaded', function() {
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-            document.getElementById('themeToggle').textContent = '☀️';
-        }
-    });
-</script>
 </body>
 </html>
